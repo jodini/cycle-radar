@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "name": "Cycle Radar",
+    "version": "0.1.0",
+    "as_of": "2026-08-21",
+    "resolution": "quarter",
+    "horizon_quarters": 20,
+    "quarters": ["2026-Q3","2026-Q4","2027-Q1","2027-Q2","2027-Q3","2027-Q4","2028-Q1","2028-Q2","2028-Q3","2028-Q4","2029-Q1","2029-Q2","2029-Q3","2029-Q4","2030-Q1","2030-Q2","2030-Q3","2030-Q4","2031-Q1","2031-Q2"],
+    "disclaimer": "Forward cycle stages are probabilistic model estimates, not forecasts with quarter-level certainty. Recalibrate at least quarterly."
+  },
+  "cycles": [
+    {
+      "id": "luxury",
+      "name": "Luxury",
+      "predictability": 3.0,
+      "trough_peak_return": {"low": 0.50, "high": 1.00},
+      "survivability": "Very high",
+      "structural_risk": "Low-medium",
+      "quality_score": 8.8,
+      "shock": {"direction": "negative", "label": "Middle East / travel-demand risk", "temporary": true},
+      "optimal_buy_window": {"start": "2026-Q3", "end": "2026-Q3", "confidence": 0.72},
+      "optimal_sell_window": {"start": "2028-Q4", "end": "2029-Q1", "confidence": 0.45},
+      "candidates": ["LVMH (MC.PA)", "Hermès", "Richemont"],
+      "rationale": "Luxury has moved from deterioration into early recovery. The attractive setup is buying before organic growth and margins fully normalize, while valuation still reflects skepticism.",
+      "indicators": ["Organic growth in Fashion & Leather Goods", "China / Asia ex-Japan demand", "Tourism flows", "Gross and operating margin", "Consensus EPS revisions", "Forward valuation"],
+      "invalidators": ["Brand-level deterioration despite industry recovery", "Persistent China weakness beyond cyclical explanation", "Structural loss of pricing power"],
+      "timeline": [
+        {"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"}
+      ]
+    },
+    {
+      "id": "chemicals",
+      "name": "Chemicals",
+      "predictability": 4.0,
+      "trough_peak_return": {"low": 0.60, "high": 1.50},
+      "survivability": "Medium",
+      "structural_risk": "Medium",
+      "quality_score": 8.6,
+      "shock": null,
+      "optimal_buy_window": {"start": "2026-Q4", "end": "2027-Q1", "confidence": 0.70},
+      "optimal_sell_window": {"start": "2029-Q2", "end": "2029-Q4", "confidence": 0.39},
+      "candidates": ["LANXESS (LXS)", "BASF", "Wacker Chemie"],
+      "rationale": "European chemicals remain near trough economics after prolonged destocking, weak end-demand and low utilization. The opportunity comes when utilization, volumes and pricing stop worsening before reported earnings recover.",
+      "indicators": ["Capacity utilization", "Customer inventories", "Chemical spreads", "European PMIs", "Auto and construction demand", "Plant closures / capacity additions", "EBITDA revisions"],
+      "invalidators": ["Permanent Asian overcapacity resets margins lower", "Balance-sheet stress before recovery", "Structural closure of European production base"],
+      "timeline": [
+        {"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"}
+      ]
+    },
+    {
+      "id": "industrial-inventory",
+      "name": "Industrial inventory",
+      "predictability": 3.5,
+      "trough_peak_return": {"low": 0.40, "high": 1.00},
+      "survivability": "High",
+      "structural_risk": "Low-medium",
+      "quality_score": 7.8,
+      "shock": {"direction": "negative", "label": "Energy / geopolitical drag", "temporary": true},
+      "optimal_buy_window": {"start": "2026-Q4", "end": "2026-Q4", "confidence": 0.62},
+      "optimal_sell_window": {"start": "2028-Q4", "end": "2029-Q1", "confidence": 0.38},
+      "candidates": ["Selected machinery", "Automation", "Components", "Packaging"],
+      "rationale": "Inventory cycles can produce order growth far above end-demand once destocking ends. The best entry is when order declines stop and channel inventories normalize.",
+      "indicators": ["Order intake", "Backlogs", "Channel inventory", "PMI new orders", "Capacity utilization", "Freight volumes"],
+      "invalidators": ["End-demand recession overwhelms inventory normalization", "Permanent demand loss from substitution"],
+      "timeline": [
+        {"stage":"R","action":"B"},{"stage":"R","action":"OB"},{"stage":"E","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"P","action":"S"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"OB"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"}
+      ]
+    },
+    {
+      "id": "housing-building",
+      "name": "Housing / building",
+      "predictability": 4.0,
+      "trough_peak_return": {"low": 0.50, "high": 1.20},
+      "survivability": "High",
+      "structural_risk": "Low-medium",
+      "quality_score": 8.4,
+      "shock": {"direction": "negative", "label": "High mortgage rates", "temporary": true},
+      "optimal_buy_window": {"start": "2027-Q1", "end": "2027-Q2", "confidence": 0.65},
+      "optimal_sell_window": {"start": "2029-Q4", "end": "2030-Q1", "confidence": 0.34},
+      "candidates": ["D.R. Horton", "Lennar", "PulteGroup", "Lowe's", "Home Depot", "Building products"],
+      "rationale": "Housing is rate-sensitive and slow-moving. Starts, permits and affordability deteriorate before the trough; listed equities often recover ahead of transaction volumes and construction activity.",
+      "indicators": ["Mortgage rates", "Builder confidence", "Housing starts", "Permits", "New-home inventory", "Price incentives", "Repair/remodel spend"],
+      "invalidators": ["Rates stay structurally high for years", "Housing supply remains excessive", "Builder balance sheets deteriorate"],
+      "timeline": [
+        {"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"}
+      ]
+    },
+    {
+      "id": "spirits",
+      "name": "Spirits",
+      "predictability": 2.0,
+      "trough_peak_return": {"low": 0.40, "high": 0.90},
+      "survivability": "Very high",
+      "structural_risk": "Medium-high",
+      "quality_score": 6.2,
+      "shock": null,
+      "optimal_buy_window": {"start": "2027-Q2", "end": "2027-Q3", "confidence": 0.50},
+      "optimal_sell_window": {"start": "2029-Q4", "end": "2030-Q1", "confidence": 0.30},
+      "candidates": ["Diageo", "Pernod Ricard", "Rémy Cointreau"],
+      "rationale": "The sector is depressed, but the key question is whether weakness is cyclical destocking and consumer pressure or a structural decline in alcohol consumption.",
+      "indicators": ["Distributor inventories", "US depletion data", "China cognac demand", "Premiumization", "Volume vs price/mix", "Younger-consumer drinking trends"],
+      "invalidators": ["Persistent structural volume decline", "Premiumization reverses permanently", "Inventory normalization fails to restore growth"],
+      "timeline": [
+        {"stage":"T","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"R","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"}
+      ]
+    },
+    {
+      "id": "autos",
+      "name": "Autos",
+      "predictability": 2.0,
+      "trough_peak_return": {"low": 0.50, "high": 1.50},
+      "survivability": "Medium",
+      "structural_risk": "High",
+      "quality_score": 6.0,
+      "shock": null,
+      "optimal_buy_window": {"start": "2027-Q2", "end": "2027-Q3", "confidence": 0.45},
+      "optimal_sell_window": {"start": "2029-Q2", "end": "2029-Q3", "confidence": 0.28},
+      "candidates": ["Stellantis", "Selected suppliers", "Selected OEMs"],
+      "rationale": "Autos have a recognizable replacement, inventory and credit cycle, but EV transition, Chinese competition and regulation make structural risk unusually high.",
+      "indicators": ["Dealer inventory", "Incentives", "SAAR / registrations", "Auto credit conditions", "Used-car prices", "EV price competition"],
+      "invalidators": ["Permanent share loss to Chinese OEMs", "Large EV transition write-offs", "Credit losses or financing stress"],
+      "timeline": [
+        {"stage":"T","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"R","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"}
+      ]
+    },
+    {
+      "id": "lithium",
+      "name": "Lithium / battery metals",
+      "predictability": 2.5,
+      "trough_peak_return": {"low": 1.00, "high": 3.00},
+      "survivability": "Low-medium",
+      "structural_risk": "Medium-high",
+      "quality_score": 6.7,
+      "shock": {"direction": "positive", "label": "Potential mine-supply disruptions", "temporary": true},
+      "optimal_buy_window": {"start": "2027-Q3", "end": "2027-Q4", "confidence": 0.42},
+      "optimal_sell_window": {"start": "2029-Q2", "end": "2029-Q3", "confidence": 0.25},
+      "candidates": ["Low-cost lithium producers", "Diversified battery-material miners"],
+      "rationale": "Battery metals can offer huge trough-to-peak equity moves, but high-cost producers can fail before the cycle turns. Supply response and project cancellations matter more than spot-price narratives.",
+      "indicators": ["Spot and contract prices", "High-cost mine closures", "Project cancellations", "EV demand", "Chinese inventories", "Cost curve"],
+      "invalidators": ["Persistent low-cost supply growth", "Battery chemistry substitution", "Weak EV demand"],
+      "timeline": [
+        {"stage":"T","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"}
+      ]
+    },
+    {
+      "id": "solar",
+      "name": "Solar manufacturing",
+      "predictability": 2.0,
+      "trough_peak_return": {"low": 1.00, "high": 3.00},
+      "survivability": "Low",
+      "structural_risk": "High",
+      "quality_score": 5.7,
+      "shock": {"direction": "mixed", "label": "Policy / trade interventions", "temporary": true},
+      "optimal_buy_window": {"start": "2027-Q4", "end": "2028-Q1", "confidence": 0.38},
+      "optimal_sell_window": {"start": "2030-Q3", "end": "2030-Q4", "confidence": 0.22},
+      "candidates": ["Low-cost survivors", "Non-China differentiated manufacturers"],
+      "rationale": "Solar manufacturing remains trapped in overcapacity. The cycle only becomes attractive when capacity exits become durable enough to restore utilization and pricing.",
+      "indicators": ["Module prices", "Capacity closures", "Utilization", "Chinese policy", "Inventory", "Trade barriers", "Cash burn"],
+      "invalidators": ["Overcapacity persists indefinitely", "Weak players survive through subsidies", "Technology shifts strand current capacity"],
+      "timeline": [
+        {"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"}
+      ]
+    },
+    {
+      "id": "oil-gas",
+      "name": "Oil & gas",
+      "predictability": 1.5,
+      "trough_peak_return": {"low": 0.50, "high": 1.50},
+      "survivability": "Medium",
+      "structural_risk": "Medium-high",
+      "quality_score": 5.1,
+      "shock": {"direction": "positive", "label": "Geopolitical supply shock", "temporary": true},
+      "optimal_buy_window": {"start": "2028-Q1", "end": "2028-Q2", "confidence": 0.32},
+      "optimal_sell_window": {"start": "2030-Q4", "end": "2031-Q1", "confidence": 0.18},
+      "candidates": ["Low-cost integrated producers", "Low-debt E&Ps"],
+      "rationale": "Oil is heavily shock-sensitive, so apparent peak economics can be temporary. The cleaner setup comes after a supply glut or capex washout, not during geopolitical scarcity pricing.",
+      "indicators": ["Inventories", "OPEC+ spare capacity", "US shale capex", "Rig count", "Project sanctions", "Demand growth", "Forward curve"],
+      "invalidators": ["Persistent geopolitical scarcity", "Structural demand destruction faster than supply rationalization"],
+      "timeline": [
+        {"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"}
+      ]
+    },
+    {
+      "id": "shipping",
+      "name": "Container shipping",
+      "predictability": 2.5,
+      "trough_peak_return": {"low": 1.00, "high": 4.00},
+      "survivability": "Low-medium",
+      "structural_risk": "Medium",
+      "quality_score": 6.5,
+      "shock": {"direction": "positive", "label": "Route disruption / effective capacity loss", "temporary": true},
+      "optimal_buy_window": {"start": "2028-Q2", "end": "2028-Q3", "confidence": 0.33},
+      "optimal_sell_window": {"start": "2030-Q4", "end": "2031-Q1", "confidence": 0.18},
+      "candidates": ["Low-cost carriers", "Owners with disciplined orderbooks"],
+      "rationale": "Shipping is mechanically cyclical because fleet supply is observable years ahead, but shocks can overwhelm the underlying cycle. Buy after rates collapse and ordering/scrapping finally repairs supply.",
+      "indicators": ["Orderbook / fleet ratio", "Scrapping", "Charter rates", "Freight rates", "Port congestion", "Route diversions", "Trade volumes"],
+      "invalidators": ["Route disruptions persist for years", "Orderbook remains excessive", "Demand structurally weakens"],
+      "timeline": [
+        {"stage":"D","action":"OS"},{"stage":"D","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"}
+      ]
+    },
+    {
+      "id": "banks-credit",
+      "name": "Banks / credit",
+      "predictability": 2.5,
+      "trough_peak_return": {"low": 0.40, "high": 1.00},
+      "survivability": "High",
+      "structural_risk": "Medium",
+      "quality_score": 6.5,
+      "shock": null,
+      "optimal_buy_window": {"start": "2028-Q4", "end": "2029-Q1", "confidence": 0.27},
+      "optimal_sell_window": {"start": "2031-Q1", "end": "2031-Q2", "confidence": 0.16},
+      "candidates": ["Well-capitalized banks", "High-quality lenders"],
+      "rationale": "Credit cycles become attractive when losses and provisioning are peaking, underwriting has tightened, and funding conditions are improving. Timing is difficult because policy and financial accidents dominate.",
+      "indicators": ["Loan growth", "Charge-offs", "Provisioning", "Credit spreads", "Yield curve", "Deposit costs", "Capital ratios"],
+      "invalidators": ["Systemic funding stress", "Commercial real-estate losses exceed capital buffers", "Regulatory capital reset"],
+      "timeline": [
+        {"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"D","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"}
+      ]
+    },
+    {
+      "id": "memory",
+      "name": "Memory chips",
+      "predictability": 4.0,
+      "trough_peak_return": {"low": 1.00, "high": 3.00},
+      "survivability": "High",
+      "structural_risk": "Medium",
+      "quality_score": 9.2,
+      "shock": null,
+      "optimal_buy_window": {"start": "2029-Q2", "end": "2029-Q3", "confidence": 0.30},
+      "optimal_sell_window": {"start": "2027-Q3", "end": "2027-Q4", "confidence": 0.55},
+      "candidates": ["Micron", "SK Hynix", "Samsung Electronics"],
+      "rationale": "Memory is one of the clearest supply/inventory cycles: shortage drives profits and capacity, overbuild destroys pricing, capex cuts reset supply. The current setup is late-cycle rather than trough-buying.",
+      "indicators": ["DRAM/NAND spot and contract prices", "Inventories", "Wafer starts", "Capex", "HBM capacity", "Bit growth", "Customer inventory"],
+      "invalidators": ["AI demand absorbs capacity much longer than normal", "China adds structurally disruptive supply"],
+      "timeline": [
+        {"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"P","action":"S"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"P","action":"S"}
+      ]
+    },
+    {
+      "id": "copper",
+      "name": "Copper / miners",
+      "predictability": 2.5,
+      "trough_peak_return": {"low": 0.70, "high": 2.00},
+      "survivability": "High",
+      "structural_risk": "Medium",
+      "quality_score": 7.0,
+      "shock": null,
+      "optimal_buy_window": {"start": "2030-Q1", "end": "2030-Q1", "confidence": 0.22},
+      "optimal_sell_window": {"start": "2028-Q2", "end": "2028-Q4", "confidence": 0.32},
+      "candidates": ["Low-cost copper miners", "Diversified miners"],
+      "rationale": "Mining capex cycles are slow and powerful. High prices eventually induce projects and substitution; low prices cancel supply and seed the next shortage. Timing is measured in years, not quarters.",
+      "indicators": ["Inventories", "Treatment charges", "Mine capex", "Project pipeline", "Grades", "China demand", "Power-grid investment"],
+      "invalidators": ["Supply response remains constrained for much longer", "Demand structurally accelerates beyond current assumptions"],
+      "timeline": [
+        {"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"OS"},{"stage":"P","action":"S"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"B"},{"stage":"R","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"}
+      ]
+    },
+    {
+      "id": "semicap",
+      "name": "Semicap equipment",
+      "predictability": 3.5,
+      "trough_peak_return": {"low": 0.60, "high": 1.50},
+      "survivability": "Very high",
+      "structural_risk": "Low-medium",
+      "quality_score": 8.5,
+      "shock": null,
+      "optimal_buy_window": {"start": "2030-Q4", "end": "2031-Q1", "confidence": 0.18},
+      "optimal_sell_window": {"start": "2028-Q1", "end": "2028-Q2", "confidence": 0.37},
+      "candidates": ["ASML", "Applied Materials", "Lam Research", "KLA"],
+      "rationale": "Semicap follows fab-investment cycles and normally leads semiconductor earnings. Current AI-driven investment is expansionary; the next great entry is more likely after overbuild and capex cuts.",
+      "indicators": ["Foundry capex", "Tool bookings", "Fab utilization", "Leading-edge node demand", "Memory capex", "Equipment lead times"],
+      "invalidators": ["AI capex remains structurally higher for much longer", "Geopolitical export restrictions permanently alter addressable markets"],
+      "timeline": [
+        {"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"E","action":"H"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"L","action":"T"},{"stage":"P","action":"OS"},{"stage":"P","action":"S"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"D","action":"W"},{"stage":"T","action":"B"},{"stage":"T","action":"OB"},{"stage":"R","action":"OB"},{"stage":"R","action":"B"}
+      ]
+    }
+  ]
+}

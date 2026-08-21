@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Cycle Radar</title>
+  <style>
+    :root {
+      --bg:#f7f7f5; --panel:#ffffff; --panel2:#f0f1ee; --text:#181a18; --muted:#666b66;
+      --border:#d9ddd7; --accent:#275d48; --accentText:#fff; --good:#275d48; --warn:#8b6a17;
+      --bad:#9a3f3f; --blue:#426b8e; --purple:#705b8a; --orange:#9a5a2b; --shadow:0 8px 24px rgba(0,0,0,.06);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#111412; --panel:#181c19; --panel2:#202521; --text:#f2f4f1; --muted:#aab0aa; --border:#343a35; --accent:#6fb292; --accentText:#0b1711; --good:#72b795; --warn:#d6ad51; --bad:#df7d7d; --blue:#77a8d2; --purple:#aa92c8; --orange:#d38b55; --shadow:none; }
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input,select{font:inherit}
+    a{color:var(--accent)}
+    .shell{max-width:1480px;margin:0 auto;padding:20px}
+    .topbar{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+    .brand h1{margin:0;font-size:28px;line-height:1.05}.brand p{margin:6px 0 0;color:var(--muted)}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.pill{border:1px solid var(--border);background:var(--panel);padding:7px 10px;border-radius:999px;color:var(--muted);font-size:13px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.tab{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 12px;cursor:pointer}.tab.active{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
+    .view{display:none}.view.active{display:block}
+    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .metric .label{font-size:13px;color:var(--muted)}.metric .value{font-size:22px;font-weight:700;margin-top:4px}.metric .sub{font-size:12px;color:var(--muted);margin-top:3px}
+    .callout{border:1px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--panel));border-radius:14px;padding:14px;margin:14px 0}
+    h2{font-size:19px;margin:0 0 10px}h3{font-size:15px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:13px}.tiny{font-size:12px}
+    .toolbar{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:12px 0}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;color:var(--muted)}select,input[type="search"],input[type="file"]{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 10px}
+    .btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 11px;cursor:pointer}.btn.primary{background:var(--accent);color:var(--accentText);border-color:var(--accent)}
+    .scroller{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel)}table{border-collapse:collapse;width:max-content;min-width:100%;font-size:13px}th,td{border-bottom:1px solid var(--border);padding:9px 8px;vertical-align:top}th{background:var(--panel2);text-align:left;position:sticky;top:0;z-index:3}th.year-head{top:0;text-align:center;height:34px}th.quarter-head{top:34px;text-align:center}td.sticky,th.sticky{position:sticky;left:0;z-index:4;background:var(--panel)}th.sticky{background:var(--panel2)}th.sticky[rowspan]{top:0;z-index:5}
+    .q{min-width:72px;text-align:center}.stage,.action{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:8px;padding:4px 6px;font-size:12px;min-width:30px}.stage.D{opacity:.58}.stage.T{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}.stage.R{background:color-mix(in srgb,var(--blue) 13%,transparent)}.stage.E{background:color-mix(in srgb,var(--good) 10%,transparent)}.stage.L{background:color-mix(in srgb,var(--orange) 13%,transparent)}.stage.P{background:color-mix(in srgb,var(--purple) 14%,transparent)}
+    .action{margin-top:4px}.action.OB{background:var(--accent);color:var(--accentText);border-color:var(--accent);font-weight:700}.action.B{color:var(--accent);border-color:var(--accent);font-weight:650}.action.H,.action.W{color:var(--muted)}.action.T{color:var(--warn);border-color:var(--warn);font-weight:650}.action.OS{background:var(--bad);color:#fff;border-color:var(--bad);font-weight:700}.action.S{color:var(--bad);border-color:var(--bad);font-weight:650}.shock{margin-top:4px;font-size:11px;color:var(--warn);line-height:1.15}
+    .quality{font-weight:700}.queue tr:hover,.cycle-list button:hover{background:var(--panel2)}
+    .cycle-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px}.cycle-list{display:flex;flex-direction:column;gap:5px}.cycle-list button{text-align:left;border:1px solid transparent;background:transparent;color:var(--text);padding:9px;border-radius:9px;cursor:pointer}.cycle-list button.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+    .tags{display:flex;gap:6px;flex-wrap:wrap}.tag{border:1px solid var(--border);border-radius:999px;padding:5px 8px;font-size:12px}.tag.good{border-color:var(--accent)}.tag.bad{border-color:var(--bad)}
+    .detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bullet-list{margin:0;padding-left:18px}.bullet-list li{margin:4px 0}
+    .markdown{max-width:880px;line-height:1.58}.markdown h1{font-size:26px}.markdown h2{font-size:20px;margin-top:24px}.markdown h3{font-size:16px;margin-top:18px}.markdown code{background:var(--panel2);padding:2px 4px;border-radius:5px}.markdown pre{background:var(--panel2);padding:12px;border-radius:10px;overflow:auto;white-space:pre-wrap}.markdown blockquote{border-left:3px solid var(--accent);margin-left:0;padding-left:12px;color:var(--muted)}
+    .promptbox{width:100%;min-height:330px;border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.45}
+    .status{font-size:12px;color:var(--muted);margin-top:8px}.far{opacity:.7}.today{background:color-mix(in srgb,var(--accent) 7%,var(--panel))}.hidden{display:none!important}
+    .footer{margin:20px 0 4px;color:var(--muted);font-size:12px}
+    @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3,.grid2,.detail-cols{grid-template-columns:1fr}.cycle-layout{grid-template-columns:1fr}.topbar{flex-direction:column}.meta{justify-content:flex-start}}
+    @media(max-width:520px){.shell{padding:12px}.grid4{grid-template-columns:1fr}.brand h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div class="brand"><h1>Cycle Radar</h1><p>Quarterly capital-rotation map for semi-predictable investment cycles.</p></div>
+      <div class="meta"><span class="pill" id="metaVersion">v—</span><span class="pill" id="metaDate">As of —</span><span class="pill">Quarterly resolution</span></div>
+    </div>
+
+    <nav class="tabs" aria-label="Views">
+      <button class="tab active" data-view="radar">Radar</button>
+      <button class="tab" data-view="cycles">Cycles</button>
+      <button class="tab" data-view="framework">Framework</button>
+      <button class="tab" data-view="llm">LLM Protocol</button>
+      <button class="tab" data-view="changelog">Changelog</button>
+    </nav>
+
+    <section id="view-radar" class="view active">
+      <div class="grid4">
+        <div class="card metric"><div class="label">Optimal entry</div><div class="value">Late T → Early R</div><div class="sub">Before consensus catches up</div></div>
+        <div class="card metric"><div class="label">Optimal exit</div><div class="value">Late E → Early P</div><div class="sub">Before reported earnings peak</div></div>
+        <div class="card metric"><div class="label">Best near-term radar</div><div class="value" id="metricBest">—</div><div class="sub" id="metricBestSub">—</div></div>
+        <div class="card metric"><div class="label">Highest predictability</div><div class="value" id="metricPredictable">—</div><div class="sub" id="metricPredictableSub">—</div></div>
+      </div>
+
+      <div class="callout small"><b>Interpretation:</b> Stage, action and shock are independent. <b>OB</b> and <b>OS</b> are intentionally narrow. Beyond roughly 4–6 quarters, the map is directional rather than precise.</div>
+
+      <div class="card">
+        <h2>Opportunity queue</h2>
+        <div class="toolbar">
+          <div class="field"><label for="queueFilter">Window</label><select id="queueFilter"><option value="all">All</option><option value="near">Next 18 months</option><option value="future">2028 onward</option></select></div>
+          <div class="field"><label for="queueSearch">Search</label><input id="queueSearch" type="search" placeholder="Cycle or candidate" /></div>
+        </div>
+        <div class="scroller"><table class="queue"><thead><tr><th>Rank</th><th>Cycle</th><th>OB window</th><th>Predictability</th><th>Trough→peak</th><th>Survival</th><th>Structural risk</th><th>Quality</th></tr></thead><tbody id="queueBody"></tbody></table></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>Quarterly rotation map</h2>
+        <div class="toolbar">
+          <div class="field"><label for="timelineFilter">Filter</label><select id="timelineFilter"><option value="all">All cycles</option><option value="ob">OB now / next 4Q</option><option value="shock">Shock-distorted now</option><option value="pred">Predictability ≥ 3.5</option></select></div>
+          <div class="field"><label for="timelineSearch">Search</label><input id="timelineSearch" type="search" placeholder="Cycle" /></div>
+        </div>
+        <div class="scroller"><table id="timelineTable"><thead id="timelineHead"></thead><tbody id="timelineBody"></tbody></table></div>
+        <div class="status">Legend: D Downturn · T Trough · R Recovery · E Expansion · L Late · P Peak · W Watch · B Buy · OB Optimal Buy · H Hold · T Trim · OS Optimal Sell · S Sell.</div>
+      </div>
+    </section>
+
+    <section id="view-cycles" class="view">
+      <div class="cycle-layout">
+        <aside class="card">
+          <h2>Cycles</h2>
+          <input id="cycleSearch" type="search" placeholder="Search cycles" style="width:100%;margin-bottom:8px" />
+          <div id="cycleList" class="cycle-list"></div>
+        </aside>
+        <article id="cycleDetail" class="card"></article>
+      </div>
+    </section>
+
+    <section id="view-framework" class="view"><div class="card markdown" id="frameworkContent">Loading framework…</div></section>
+
+    <section id="view-llm" class="view">
+      <div class="grid2">
+        <div class="card">
+          <h2>LLM re-evaluation</h2>
+          <p class="small muted">Generate a constrained research prompt from the current radar. The LLM proposes; you review; the JSON is imported only after approval.</p>
+          <div class="toolbar">
+            <div class="field"><label for="llmMode">Mode</label><select id="llmMode"><option value="single">Single-cycle check</option><option value="full">Full recalibration</option></select></div>
+            <div class="field" id="llmCycleField"><label for="llmCycle">Cycle</label><select id="llmCycle"></select></div>
+          </div>
+          <button id="generatePrompt" class="btn primary">Generate prompt</button>
+          <button id="downloadPrompt" class="btn">Download prompt</button>
+          <textarea id="promptBox" class="promptbox" aria-label="Generated LLM prompt"></textarea>
+        </div>
+        <div class="card">
+          <h2>Import / export</h2>
+          <p class="small muted">Use import for local preview before committing a new <code>cycles.json</code>.</p>
+          <div class="field"><label for="importFile">Import JSON</label><input id="importFile" type="file" accept="application/json,.json" /></div>
+          <div style="margin-top:10px"><button id="exportJson" class="btn">Export current JSON</button> <button id="resetData" class="btn">Reload repository data</button></div>
+          <div id="importStatus" class="status"></div>
+          <hr style="border:0;border-top:1px solid var(--border);margin:16px 0" />
+          <h3>Protocol</h3>
+          <div id="llmProtocolContent" class="markdown small">Loading protocol…</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-changelog" class="view"><div class="card markdown" id="changelogContent">Loading changelog…</div></section>
+
+    <div class="footer">Cycle Radar is a research framework, not investment advice. Quarter-level timing becomes increasingly uncertain with horizon.</div>
+  </main>
+
+<script>
+(() => {
+  'use strict';
+  let model = null;
+  let repoModel = null;
+  let protocolText = '';
+  let selectedCycleId = null;
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const pct = x => `${Math.round(x*100)}%`;
+  const range = r => `+${Math.round(r.low*100)}–${Math.round(r.high*100)}%`;
+  const stageName = {D:'Downturn',T:'Trough',R:'Recovery',E:'Expansion',L:'Late cycle',P:'Peak'};
+  const actionName = {W:'Watch',B:'Buy',OB:'Optimal Buy',H:'Hold',T:'Trim',OS:'Optimal Sell',S:'Sell'};
+
+  function markdown(md){
+    const lines = md.replace(/\r/g,'').split('\n'); let out='', inCode=false, inList=false;
+    for (const raw of lines){ const line=raw;
+      if(line.startsWith('```')){ if(inList){out+='</ul>';inList=false;} inCode=!inCode; out+=inCode?'<pre><code>':'</code></pre>'; continue; }
+      if(inCode){ out+=esc(line)+'\n'; continue; }
+      if(/^### /.test(line)){if(inList){out+='</ul>';inList=false;}out+=`<h3>${inline(line.slice(4))}</h3>`;continue;}
+      if(/^## /.test(line)){if(inList){out+='</ul>';inList=false;}out+=`<h2>${inline(line.slice(3))}</h2>`;continue;}
+      if(/^# /.test(line)){if(inList){out+='</ul>';inList=false;}out+=`<h1>${inline(line.slice(2))}</h1>`;continue;}
+      if(/^- /.test(line)){if(!inList){out+='<ul>';inList=true;}out+=`<li>${inline(line.slice(2))}</li>`;continue;}
+      if(/^\d+\. /.test(line)){if(!inList){out+='<ul>';inList=true;}out+=`<li>${inline(line.replace(/^\d+\. /,''))}</li>`;continue;}
+      if(inList){out+='</ul>';inList=false;}
+      if(!line.trim()){out+='<div style="height:7px"></div>';continue;}
+      if(line.startsWith('> ')){out+=`<blockquote>${inline(line.slice(2))}</blockquote>`;continue;}
+      out+=`<p>${inline(line)}</p>`;
+    }
+    if(inList) out+='</ul>'; return out;
+  }
+  function inline(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`(.+?)`/g,'<code>$1</code>'); }
+
+  async function getText(path){ const r=await fetch(path,{cache:'no-store'}); if(!r.ok) throw new Error(`${path}: ${r.status}`); return r.text(); }
+  async function getJson(path){ const r=await fetch(path,{cache:'no-store'}); if(!r.ok) throw new Error(`${path}: ${r.status}`); return r.json(); }
+
+  function validate(data){
+    if(!data || !data.meta || !Array.isArray(data.meta.quarters) || !Array.isArray(data.cycles)) throw new Error('Missing meta.quarters or cycles array.');
+    const n=data.meta.quarters.length;
+    for(const c of data.cycles){ if(!c.id||!c.name||!Array.isArray(c.timeline)||c.timeline.length!==n) throw new Error(`Invalid timeline for ${c.name||c.id||'unknown cycle'}. Expected ${n} quarters.`); }
+    return data;
+  }
+
+  function quarterParts(q){
+    const m=String(q).match(/^(\d{4})-Q([1-4])$/);
+    return m ? {year:m[1], quarter:'Q'+m[2]} : {year:String(q), quarter:String(q)};
+  }
+  function yearGroups(quarters){
+    const groups=[];
+    quarters.forEach((q,i)=>{
+      const {year}=quarterParts(q);
+      const last=groups[groups.length-1];
+      if(last && last.year===year) last.count += 1;
+      else groups.push({year,count:1,start:i});
+    });
+    return groups;
+  }
+  function timelineHeaderHtml(quarters, leading=[]){
+    const groups=yearGroups(quarters);
+    const row1 = '<tr>' + leading.map(x=>`<th class="${x.sticky?'sticky ':''}${x.className||''}" rowspan="2">${esc(x.label)}</th>`).join('') +
+      groups.map(g=>`<th class="year-head ${g.start===0?'today':''} ${g.start>=10?'far':''}" colspan="${g.count}">${esc(g.year)}</th>`).join('') + '</tr>';
+    const row2 = '<tr>' + quarters.map((q,i)=>{
+      const {quarter}=quarterParts(q);
+      return `<th class="q quarter-head ${i===0?'today':''} ${i>=10?'far':''}">${esc(quarter)}${i===0?'<div class="tiny muted">NOW</div>':''}</th>`;
+    }).join('') + '</tr>';
+    return row1 + row2;
+  }
+
+  function currentCell(c){ return c.timeline[0] || {}; }
+  function firstObIndex(c){ return c.timeline.findIndex(x=>x.action==='OB'); }
+  function nearOb(c){ const i=firstObIndex(c); return i>=0 && i<=5; }
+
+  function renderAll(){
+    renderMeta(); renderMetrics(); renderQueue(); renderTimeline(); renderCycleList(); renderCycleDetail(selectedCycleId || model.cycles[0]?.id); renderLlmCycles();
+  }
+  function renderMeta(){ $('metaVersion').textContent='v'+model.meta.version; $('metaDate').textContent='As of '+model.meta.as_of; }
+  function renderMetrics(){
+    const near=[...model.cycles].filter(nearOb).sort((a,b)=>b.quality_score-a.quality_score);
+    const best=near[0] || [...model.cycles].sort((a,b)=>b.quality_score-a.quality_score)[0];
+    $('metricBest').textContent=best?best.name:'—'; $('metricBestSub').textContent=best?`${best.optimal_buy_window.start} · quality ${best.quality_score.toFixed(1)}/10`:'—';
+    const pred=[...model.cycles].sort((a,b)=>b.predictability-a.predictability)[0]; $('metricPredictable').textContent=pred?pred.name:'—'; $('metricPredictableSub').textContent=pred?`${pred.predictability}/5 · ${range(pred.trough_peak_return)}`:'—';
+  }
+
+  function renderQueue(){
+    const f=$('queueFilter').value, q=$('queueSearch').value.trim().toLowerCase(); let rows=[...model.cycles];
+    rows=rows.filter(c=>{ const idx=firstObIndex(c); if(f==='near' && !(idx>=0&&idx<=5)) return false; if(f==='future' && !(idx>=6)) return false; if(q && !(c.name+' '+c.candidates.join(' ')).toLowerCase().includes(q)) return false; return true; });
+    rows.sort((a,b)=>{const ai=firstObIndex(a),bi=firstObIndex(b);return (ai<0?99:ai)-(bi<0?99:bi)||b.quality_score-a.quality_score;});
+    $('queueBody').innerHTML=rows.map((c,i)=>`<tr><td>${i+1}</td><td><b>${esc(c.name)}</b>${c.shock?`<div class="shock">⚡ ${esc(c.shock.label)}</div>`:''}</td><td><span class="action OB">OB</span> ${esc(c.optimal_buy_window.start)}${c.optimal_buy_window.end!==c.optimal_buy_window.start?' → '+esc(c.optimal_buy_window.end):''}<div class="tiny muted">conf. ${pct(c.optimal_buy_window.confidence)}</div></td><td>${c.predictability}/5</td><td><b>${range(c.trough_peak_return)}</b></td><td>${esc(c.survivability)}</td><td>${esc(c.structural_risk)}</td><td class="quality">${c.quality_score.toFixed(1)}/10</td></tr>`).join('');
+  }
+
+  function renderTimeline(){
+    const quarters=model.meta.quarters; $('timelineHead').innerHTML=timelineHeaderHtml(quarters,[{label:'Cycle',sticky:true},{label:'Pred.'},{label:'T→P'}]);
+    const f=$('timelineFilter').value, q=$('timelineSearch').value.trim().toLowerCase();
+    const rows=model.cycles.filter(c=>{ if(q&&!c.name.toLowerCase().includes(q)) return false; if(f==='ob'&&!c.timeline.slice(0,4).some(x=>x.action==='OB')) return false; if(f==='shock'&&!c.shock) return false; if(f==='pred'&&c.predictability<3.5) return false; return true; });
+    $('timelineBody').innerHTML=rows.map(c=>`<tr><td class="sticky"><b>${esc(c.name)}</b>${c.shock?`<div class="shock">⚡ ${esc(c.shock.direction)}: ${esc(c.shock.label)}</div>`:''}</td><td>${c.predictability}</td><td><b>${range(c.trough_peak_return)}</b></td>${c.timeline.map((x,i)=>`<td class="q ${i===0?'today':''} ${i>=10?'far':''}"><span class="stage ${x.stage}" title="${stageName[x.stage]||x.stage}">${x.stage}</span><br><span class="action ${x.action}" title="${actionName[x.action]||x.action}">${x.action}</span>${i===0&&c.shock?'<div class="shock">⚡</div>':''}</td>`).join('')}</tr>`).join('');
+  }
+
+  function renderCycleList(){
+    const q=$('cycleSearch').value.trim().toLowerCase(); const rows=model.cycles.filter(c=>!q||c.name.toLowerCase().includes(q));
+    $('cycleList').innerHTML=rows.map(c=>`<button data-cycle="${esc(c.id)}" class="${c.id===selectedCycleId?'active':''}"><b>${esc(c.name)}</b><div class="tiny muted">${currentCell(c).stage} · ${currentCell(c).action} · ${c.predictability}/5</div></button>`).join('');
+    $('cycleList').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{selectedCycleId=b.dataset.cycle;renderCycleList();renderCycleDetail(selectedCycleId);}));
+  }
+
+  function renderCycleDetail(id){
+    const c=model.cycles.find(x=>x.id===id) || model.cycles[0]; if(!c) return; selectedCycleId=c.id; const cur=currentCell(c);
+    $('cycleDetail').innerHTML=`
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap"><div><h2>${esc(c.name)}</h2><div class="tags"><span class="tag good">${stageName[cur.stage]} · ${actionName[cur.action]}</span><span class="tag">Predictability ${c.predictability}/5</span><span class="tag">T→P ${range(c.trough_peak_return)}</span><span class="tag">Quality ${c.quality_score.toFixed(1)}/10</span></div></div>${c.shock?`<span class="tag bad">⚡ ${esc(c.shock.direction)} shock: ${esc(c.shock.label)}</span>`:''}</div>
+      <p>${esc(c.rationale)}</p>
+      <div class="grid3" style="margin:12px 0"><div class="card metric"><div class="label">Optimal buy</div><div class="value">${esc(c.optimal_buy_window.start)}${c.optimal_buy_window.end!==c.optimal_buy_window.start?' → '+esc(c.optimal_buy_window.end):''}</div><div class="sub">Confidence ${pct(c.optimal_buy_window.confidence)}</div></div><div class="card metric"><div class="label">Optimal sell</div><div class="value">${esc(c.optimal_sell_window.start)}${c.optimal_sell_window.end!==c.optimal_sell_window.start?' → '+esc(c.optimal_sell_window.end):''}</div><div class="sub">Confidence ${pct(c.optimal_sell_window.confidence)}</div></div><div class="card metric"><div class="label">Survivability / structural risk</div><div class="value">${esc(c.survivability)}</div><div class="sub">Structural risk: ${esc(c.structural_risk)}</div></div></div>
+      <div class="detail-cols"><div><h3>Leading indicators</h3><ul class="bullet-list small">${c.indicators.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div><h3>Invalidation conditions</h3><ul class="bullet-list small">${c.invalidators.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>
+      <h3 style="margin-top:16px">Candidates</h3><div class="tags">${c.candidates.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>
+      <h3 style="margin-top:16px">Quarterly path</h3><div class="scroller"><table><thead>${timelineHeaderHtml(model.meta.quarters)}</thead><tbody><tr>${c.timeline.map((x,i)=>`<td class="q ${i===0?'today':''} ${i>=10?'far':''}"><span class="stage ${x.stage}">${x.stage}</span><br><span class="action ${x.action}">${x.action}</span></td>`).join('')}</tr></tbody></table></div>`;
+  }
+
+  function renderLlmCycles(){ $('llmCycle').innerHTML=model.cycles.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join(''); }
+
+  function generatePrompt(){
+    const mode=$('llmMode').value; let target='';
+    if(mode==='single'){
+      const c=model.cycles.find(x=>x.id===$('llmCycle').value); target=`\n\nCURRENT CYCLE RECORD\n${JSON.stringify(c,null,2)}\n\nTASK\nRe-evaluate only this cycle from scratch as of today using current attributable sources. Return a replacement cycle record plus a concise change summary. Do not modify unrelated cycles.`;
+    } else {
+      target=`\n\nCURRENT RADAR\n${JSON.stringify(model,null,2)}\n\nTASK\nPerform a full recalibration of every cycle from scratch as of today using current attributable sources. Return a complete replacement model compatible with the current cycles.json structure, followed by a concise material-changes summary.`;
+    }
+    $('promptBox').value=`You are re-evaluating an investment Cycle Radar. Follow the protocol below strictly.\n\n${protocolText}${target}\n\nIMPORTANT OUTPUT RULES\n- Separate industry cycle stage from stock-price timing.\n- Keep OB and OS windows narrow.\n- Treat shocks as overlays, not stages.\n- Reduce confidence with forecast horizon.\n- Identify structural-vs-cyclical risk explicitly.\n- Do not preserve the previous stage merely for continuity.\n- Use current sources and cite the evidence in your prose change summary.\n- JSON must be valid and machine-readable.`;
+  }
+
+  function download(filename,text,type='text/plain'){ const blob=new Blob([text],{type}); const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500); }
+
+  document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));btn.classList.add('active');$('view-'+btn.dataset.view).classList.add('active');}));
+  $('queueFilter').addEventListener('change',renderQueue); $('queueSearch').addEventListener('input',renderQueue); $('timelineFilter').addEventListener('change',renderTimeline); $('timelineSearch').addEventListener('input',renderTimeline); $('cycleSearch').addEventListener('input',renderCycleList);
+  $('llmMode').addEventListener('change',()=>{$('llmCycleField').classList.toggle('hidden',$('llmMode').value==='full');}); $('generatePrompt').addEventListener('click',generatePrompt); $('downloadPrompt').addEventListener('click',()=>{if(!$('promptBox').value)generatePrompt();download('cycle-radar-llm-prompt.txt',$('promptBox').value);});
+  $('exportJson').addEventListener('click',()=>download('cycles.json',JSON.stringify(model,null,2),'application/json'));
+  $('resetData').addEventListener('click',()=>{model=structuredClone(repoModel);selectedCycleId=null;renderAll();$('importStatus').textContent='Reloaded repository data.';});
+  $('importFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{const data=validate(JSON.parse(await file.text()));model=data;selectedCycleId=null;renderAll();$('importStatus').textContent=`Loaded ${file.name} locally. Nothing has been written to the repository.`;}catch(err){$('importStatus').textContent='Import failed: '+err.message;}});
+
+  async function init(){
+    try{
+      const [json,method,protocol,changes]=await Promise.all([getJson('cycles.json'),getText('methodology.md'),getText('llm-protocol.md'),getText('changelog.md')]);
+      repoModel=validate(json); model=structuredClone(repoModel); protocolText=protocol;
+      $('frameworkContent').innerHTML=markdown(method); $('llmProtocolContent').innerHTML=markdown(protocol); $('changelogContent').innerHTML=markdown(changes);
+      renderAll();
+    }catch(err){
+      document.body.innerHTML=`<main class="shell"><div class="card"><h1>Cycle Radar could not load its data files.</h1><p>${esc(err.message)}</p><p>If you opened <code>index.html</code> directly from your filesystem, launch a local web server instead:</p><pre>python3 -m http.server 8000</pre><p>Then open <code>http://localhost:8000</code>.</p></div></main>`;
+    }
+  }
+  init();
+})();
+</script>
+</body>
+</html>
